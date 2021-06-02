@@ -1,0 +1,10 @@
+.home {
+  width: 100%;
+  height: 82vh;
+}
+
+@media (min-width: 570px) {
+  .home {
+    height: 80vh;
+  }
+}

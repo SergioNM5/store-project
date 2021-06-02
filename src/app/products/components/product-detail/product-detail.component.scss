@@ -1,0 +1,25 @@
+.container-img {
+  width: 100%;
+  img {
+    width: 100%;
+  }
+}
+
+@media (min-width: 570px) {
+  .container-product {
+    display: flex;
+    justify-content: center;
+  }
+  .container-img {
+    width: 50%;
+    img {
+      width: 100%;
+    }
+  }
+  .container-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+}
