@@ -1,15 +1,17 @@
-<div *ngIf="product" class="container-product">
+<div *ngIf="(product$ | async) as product" class="container-product">
     <div class="container-img">
-        <img [src]="product.image" alt="">
+      <img [src]="product.image" alt="">
     </div>
     <div class="container-info">
-        <ul>
-            <li>Nombre: {{product.title}} </li>
-            <li>Precio: {{product.price | currency}} </li>
-        </ul>
-        <p> {{product.description}} </p>
+      <ul>
+        <li>Nombre: {{ product.title }}</li>
+        <li>Precio: {{ product.price | currency }}</li>
+      </ul>
+      <p>{{ product.description }}</p>
     </div>
-    <button (click)= "createProduct()" >crear</button>
-    <button (click)= "updateProduct()" >Actualizar</button>
-    <button (click)= "deleteProduct()" >Delete</button>
+    <button (click)="createProduct()">crear</button>
+    <button (click)="updateProduct()">update</button>
+    <button (click)="deleteProduct()">delete</button>
+    <button (click)="getFile()">GetFile</button>
+
 </div>

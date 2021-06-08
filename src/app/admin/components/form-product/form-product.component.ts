@@ -42,7 +42,7 @@ export class FormProductComponent implements OnInit {
     }
   }
 
-  uploadFile(event) {
+  uploadFile(event): any {
     const file = event.target.files[0];
     const name = 'images';
     const fileRef = this.storage.ref(name);
@@ -71,7 +71,7 @@ export class FormProductComponent implements OnInit {
     });
   }
 
-  get priceField() {
+  get priceField(): any {
     return this.form.get('price');
   }
 

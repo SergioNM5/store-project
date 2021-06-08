@@ -1,24 +1,21 @@
-import {Component,
-        Input,
-        Output,
-        EventEmitter,
-        OnChanges,
-        SimpleChanges,
-        OnInit,
-        DoCheck,
-        OnDestroy
-} from '@angular/core';
-import { Product } from '../../../product.model';
+import {
+    Component,
+    Input,
+    Output,
+    EventEmitter,
+    OnInit,
+    OnDestroy
+  } from '@angular/core';
+import { Product } from '../../../core/models/product.model';
+import { CartService } from './../../../core/services/cart.service';
 
-import { CartService } from 'src/app/core/services/cart.service';
-
-
-@Component ({
-    selector: 'app-product',
-    templateUrl: './product.component.html',
-    styleUrls: ['./product.component.scss'],
+@Component({
+selector: 'app-product',
+templateUrl: './product.component.html',
+styleUrls: ['./product.component.scss']
 })
-export class ProductComponent implements OnInit, DoCheck, OnDestroy {
+export class ProductComponent implements OnInit, OnDestroy {
+
     @Input() product: Product;
     @Output() productClicked: EventEmitter<any> = new EventEmitter();
 
@@ -29,17 +26,19 @@ export class ProductComponent implements OnInit, DoCheck, OnDestroy {
     ) {
         console.log('1. constructor');
     }
-    ngOnInit(): void {
+
+    ngOnInit() {
         console.log('3. ngOnInit');
     }
-    ngDoCheck(): void {
-        console.log('4. ngDoCheck');
-    }
-    ngOnDestroy(): void {
+
+    ngOnDestroy() {
         console.log('5. ngOnDestroy');
     }
-    addCart(): void {
-        console.log('Añadir al carrito');
+
+    addCart() {
+        console.log('añadir al carrito');
         this.cartService.addCart(this.product);
+        // this.productClicked.emit(this.product.id);
     }
+
 }

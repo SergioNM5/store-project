@@ -1,7 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute, Params} from '@angular/router';
-import {ProductsService} from '../../../core/services/products/products.service';
-import {Product} from '../../../product.model';
+import { ActivatedRoute, Params } from '@angular/router';
+
+import { Observable } from 'rxjs';
+import { switchMap } from 'rxjs/operators';
+
+import { ProductsService } from './../../../core/services/products/products.service';
+import { Product } from './../../../core/models/product.model';
+
+import * as FileSaver from 'file-saver';
+
+
 @Component({
   selector: 'app-product-detail',
   templateUrl: './product-detail.component.html',
@@ -9,59 +17,70 @@ import {Product} from '../../../product.model';
 })
 export class ProductDetailComponent implements OnInit {
 
-  product: Product;
+  product$: Observable<unknown>;
 
   constructor(
     private route: ActivatedRoute,
     private productsService: ProductsService
   ) { }
 
-  ngOnInit(): void {
-    this.route.params.subscribe((params: Params) => {
-      const id = params.id;
-      this.fetchProduct(id);
-      // this.product = this.productsService.getProduct(id);
-    });
-  }
-
-  fetchProduct(id: string): void {
-    this.productsService.getProduct(id)
-    .subscribe(product => {
-      this.product = product;
-    }
+  ngOnInit() {
+    this.product$ = this.route.params
+    .pipe(
+      switchMap((params: Params) => {
+        return this.productsService.getProduct(params.id);
+      })
     );
   }
-  createProduct(): void {
+
+  createProduct() {
     const newProduct: Product = {
-      id: '224',
-      title: 'Nuevo000',
-      image: 'D:/Sergio Naranjo Morales/Platzi/angular/platzi-store/src/assets/images/banner-1.jpg',
-      price: 55000,
-      description: 'Hola soy un nuevo producto',
+      id: '222',
+      title: 'nuevo desde angular',
+      image: 'assets/images/banner-1.jpg',
+      price: 3000,
+      description: 'nuevo producto'
     };
     this.productsService.createProduct(newProduct)
     .subscribe(product => {
       console.log(product);
-    }
-    );
+    });
   }
-  updateProduct(): void {
+
+  updateProduct() {
     const updateProduct: Partial<Product> = {
-      // image: 'D:/Sergio Naranjo Morales/Platzi/angular/platzi-store/src/assets/images/banner-1.jpg',
-      price: 65000,
-      description: 'Hola soy una edición producto',
+      price: 555555,
+      description: 'edicion titulo'
     };
-    this.productsService.updateProduct('224', updateProduct)
+    this.productsService.updateProduct('2', updateProduct)
     .subscribe(product => {
       console.log(product);
-    }
-    );
+    });
   }
-  deleteProduct(): void {
-    this.productsService.deleteProduct('123')
+
+  deleteProduct() {
+    this.productsService.deleteProduct('222')
     .subscribe(rta => {
       console.log(rta);
-    }
+    });
+  }
+  getRandomUsers() {
+    this.productsService.getRandomUsers()
+    .subscribe(
+      users => {
+      console.log(users);
+      },
+      error => {
+        console.error(error);
+      }
     );
+  }
+
+  getFile() {
+    this.productsService.getFile()
+    .subscribe(content => {
+      const blob = new Blob ([content], {type: 'text/plain;charset=utf-8'});
+      FileSaver.saveAs(blob, 'Archivo.txt');
+    });
   }
 }
